@@ -16,6 +16,8 @@ public class MonsterScript : MonoBehaviour {
 	public CollisionListScript playerSensor;
 	public CollisionListScript attackSensor;
 
+	public GunManager monsterBullet;
+
 	public void AttackPlayer(){
 		if (attackSensor.collisionObjects.Count > 0) {
 			attackSensor.collisionObjects [0].transform.GetChild (0).GetChild (0).SendMessage ("Hit", 10);
@@ -73,6 +75,8 @@ public class MonsterScript : MonoBehaviour {
 					} else {
 						animator.SetBool ("Attack", false);
 						//this.transform.position += this.transform.forward * moveSpeed * Time.deltaTime;
+						//Shoot
+						monsterBullet.TryToTriggerGun ();
 						this.GetComponent<Rigidbody>().velocity = this.transform.forward * moveSpeed;
 					}
 				}

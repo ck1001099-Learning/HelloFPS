@@ -20,8 +20,12 @@ public class PlayerController : MonoBehaviour {
 	public float jumpSpeed;
 	public GunManager gunManager;
 
+	public GameObject fireManager;
+
 	public GameUIManager uiManager;
 	public int hp = 100;
+
+	public GameObject stepSound;
 
 	// Use this for initialization
 	void Start () {
@@ -57,6 +61,12 @@ public class PlayerController : MonoBehaviour {
 		Cursor.lockState = CursorLockMode.Locked;
 		if (Input.GetMouseButton (0)) {
 			gunManager.TryToTriggerGun ();
+		}
+
+		if (Input.GetMouseButton (1)) {
+			fireManager.gameObject.SetActive (true);
+		} else {
+			fireManager.gameObject.SetActive (false);
 		}
 
 		Vector3 moveDirection = Vector3.zero;
@@ -95,6 +105,12 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		rigidBody.velocity = velocity;
+
+		if (velocity != Vector3.zero) {
+			stepSound.gameObject.SetActive (true);
+		} else {
+			stepSound.gameObject.SetActive (false);
+		}
 
 		rotateYTransform.transform.localEulerAngles += new Vector3 (0, Input.GetAxis ("Horizontal"), 0) * rotateSpeed;
 		currentRotateX += Input.GetAxis ("Vertical") * rotateSpeed;

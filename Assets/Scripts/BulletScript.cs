@@ -22,7 +22,11 @@ public class BulletScript : MonoBehaviour {
 	public float damageValue = 15;
 
 	void OnTriggerEnter(Collider other){
-		other.gameObject.SendMessage ("Hit", damageValue);
+		if (other.gameObject.name == "PlayerRoot") {
+			other.transform.Find ("PlayerElevationAngle/Player").gameObject.SendMessage ("Hit", damageValue);
+		} else {
+			other.gameObject.SendMessage ("Hit", damageValue);
+		}
 		explosion.gameObject.transform.parent = null;
 		explosion.gameObject.SetActive (true);
 		bulletAudio.pitch = Random.Range (0.8f, 1);
